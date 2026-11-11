@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0d12">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%230a0d12'/%3E%3Ctext x='4' y='29' fill='%23d8ff3e' font-family='sans-serif' font-weight='900' font-size='25'%3ENS%3C/text%3E%3C/svg%3E">
+  <title>NEON SLIDE — JDM Drift Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Neon Slide home"><span class="brand-mark">N<span>S</span></span><span class="brand-name">NEON<span>SLIDE</span></span></a>
+      <div class="top-meta"><span class="live-dot"></span><span>DAIKOKU NIGHT RUN</span><i></i><span>SESSION 01</span></div>
+      <button class="icon-btn" id="soundBtn" aria-label="Toggle sound" title="Sound on/off"><span id="soundIcon">♫</span></button>
+    </header>
+
+    <section class="game-layout">
+      <div class="track-wrap" id="trackWrap">
+        <canvas id="gameCanvas" aria-label="JDM drift simulator game"></canvas>
+        <div class="track-vignette"></div>
+        <div class="hud-top">
+          <div class="session-pill"><span class="session-dot"></span><span id="sessionLabel">FREE RUN</span></div>
+          <button class="pause-btn" id="pauseBtn" aria-label="Pause game"><span class="pause-glyph">Ⅱ</span></button>
+        </div>
+        <div class="score-hud">
+          <div class="score-label">DRIFT SCORE</div>
+          <div class="score-value" id="scoreValue">000000</div>
+          <div class="combo-row"><span class="combo-badge" id="comboBadge">x1.0</span><span id="comboText">BUILD YOUR LINE</span></div>
+        </div>
+        <div class="speed-hud"><div class="speed-number" id="speedValue">000</div><div class="speed-unit">KM/H</div><div class="speed-bar"><span id="speedBar"></span></div></div>
+        <div class="drift-indicator" id="driftIndicator"><span class="drift-icon">↗</span><span>DRIFTING</span></div>
+        <div class="toast" id="toast">NICE LINE <b>+250</b></div>
+        <div class="countdown hidden" id="countdown">3</div>
+        <div class="center-overlay" id="overlay">
+          <div class="overlay-card">
+            <div class="eyebrow"><span class="eyebrow-line"></span> JAPANESE STREET CULTURE <span class="eyebrow-line"></span></div>
+            <h1>OWN THE<br><em>SLIDE.</em></h1>
+            <p class="overlay-copy">Malam memanggil. Jaga sudut, tahan gas, dan ukir nama di aspal.</p>
+            <div class="car-select">
+              <button class="car-arrow" id="prevCar" aria-label="Mobil sebelumnya">‹</button>
+              <div class="car-info"><span class="car-class">YOUR MACHINE</span><strong id="carName">SILVIA S15</strong><span id="carSpecs">RWD · 2.0 TURBO · 320 HP</span></div>
+              <button class="car-arrow" id="nextCar" aria-label="Mobil berikutnya">›</button>
+            </div>
+            <button class="start-btn" id="startBtn"><span>START ENGINE</span><b>↗</b></button>
+            <div class="best-row">PERSONAL BEST <strong id="bestScore">000000</strong></div>
+          </div>
+        </div>
+        <div class="pause-overlay hidden" id="pauseOverlay">
+          <div class="pause-card"><span class="eyebrow">PIT LANE</span><h2>TAKE A<br><em>BREATHER.</em></h2><p>Mobilmu masih panas.</p><button class="start-btn" id="resumeBtn"><span>RESUME RUN</span><b>↗</b></button><button class="text-btn" id="restartBtn">RESTART SESSION</button></div>
+        </div>
+        <div class="result-overlay hidden" id="resultOverlay">
+          <div class="result-card"><span class="eyebrow">SESSION COMPLETE</span><h2>RUN<br><em>FINISHED.</em></h2><div class="final-score"><span>FINAL SCORE</span><strong id="finalScore">000000</strong></div><div class="result-stats"><div><span>BEST COMBO</span><b id="finalCombo">x1.0</b></div><div><span>TIME ON ANGLE</span><b id="finalAngle">0.0s</b></div></div><button class="start-btn" id="againBtn"><span>RUN IT BACK</span><b>↗</b></button></div>
+        </div>
+        <div class="touch-controls" id="touchControls">
+          <div class="steer-group"><button class="control-btn steer" data-control="left" aria-label="Steer left">‹</button><button class="control-btn steer" data-control="right" aria-label="Steer right">›</button></div>
+          <div class="pedal-group"><button class="control-btn handbrake" data-control="handbrake"><span>HB</span><small>HANDBRAKE</small></button><button class="control-btn throttle" data-control="gas"><span>GAS</span><small>HOLD</small></button></div>
+        </div>
+      </div>
+      <aside class="side-panel">
+        <div class="panel-kicker"><span>01</span> DRIVER BRIEF</div>
+        <h2>Find your<br>rhythm.</h2>
+        <p class="brief-copy">Masuk tikungan, pindahkan beban, lalu biarkan buritan menari. Drift bersih = poin besar.</p>
+        <div class="divider"></div>
+        <div class="stat-list"><div><span>TRACK</span><strong>DOCKSIDE LOOP</strong></div><div><span>CONDITIONS</span><strong><i class="weather-dot"></i> CLEAR · 18°C</strong></div><div><span>YOUR RIDE</span><strong id="sideCar">SILVIA S15</strong></div></div>
+        <div class="howto"><div class="panel-kicker"><span>02</span> HOW TO PLAY</div><div class="key-row"><span class="key">A</span><span class="key">D</span><span>STEER</span></div><div class="key-row"><span class="key wide">W</span><span class="key wide">↑</span><span>THROTTLE</span></div><div class="key-row"><span class="key">SPACE</span><span>HANDBRAKE</span></div></div>
+        <div class="panel-footer"><span class="footer-mark">NS / 01</span><span>DRIVE YOUR LINE</span></div>
+      </aside>
+    </section>
+    <footer class="mobile-tip"><span>◉</span> Hold gas + steer through the corner. Pull handbrake to kick it out.</footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
