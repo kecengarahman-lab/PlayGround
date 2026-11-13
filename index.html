@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#090b16" />
+  <title>Yoru Drift — Midnight Run</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="app">
+    <canvas id="game" aria-label="Yoru Drift night city driving game"></canvas>
+    <div class="vignette"></div>
+    <div class="scanlines"></div>
+
+    <section class="screen menu-screen active" id="menuScreen">
+      <header class="topbar"><div class="brand"><span class="brand-mark">夜</span><span>YORU<span class="brand-light">/DRIFT</span></span></div><div class="top-meta"><span class="live-dot"></span> TOKYO · 00:47 AM</div></header>
+      <div class="menu-content">
+        <div class="eyebrow"><i></i> MIDNIGHT RUN // SEASON 01</div>
+        <h1>OWN THE<br><em>NIGHT.</em></h1>
+        <p class="hero-copy">Jalanan milikmu. Temukan garis balapmu di bawah cahaya neon Tokyo.</p>
+        <div class="menu-actions">
+          <button class="primary-btn" id="startBtn"><span>MULAI BERKENDARA</span><b>↗</b></button>
+          <button class="text-btn" id="settingsBtn">PENGATURAN <span>＋</span></button>
+          <button class="text-btn" id="exitBtn">KELUAR <span>↗</span></button>
+        </div>
+        <div class="garage-teaser"><span class="teaser-line"></span><div><small>GARASI SAAT INI</small><strong id="menuCarName">KAZE R-34</strong></div><span class="teaser-car">◢</span></div>
+      </div>
+      <div class="menu-footer"><span>DRIVE YOUR STORY</span><span>TOUCH / WASD TO PLAY</span><span>VER. 1.0.4</span></div>
+      <div class="vertical-jp">夜の東京&nbsp; • &nbsp;東京の夜</div>
+    </section>
+
+    <section class="screen garage-screen" id="garageScreen">
+      <div class="subhead"><button class="back-btn" data-back="menuScreen">←</button><div><small>01 / GARASI</small><h2>PILIH <em>MESINMU.</em></h2></div><span class="step-label">SELECT YOUR RIDE</span></div>
+      <div class="garage-layout">
+        <div class="car-preview"><div class="preview-glow"></div><canvas id="carPreview" width="600" height="320"></canvas><div class="preview-spec"><span id="carClass">STREET / AWD</span><span>★★★★★ <b>★★★★★</b></span></div></div>
+        <div class="car-details"><div class="car-number" id="carIndex">01 <i>/ 04</i></div><h3 id="carName">KAZE R-34</h3><p id="carDesc">Legenda jalanan dengan keseimbangan sempurna. Dibuat untuk tikungan panjang dan malam tanpa akhir.</p><div class="stat-list"><div><span>POWER</span><div class="stat-track"><i id="statPower"></i></div><b id="powerNum">92</b></div><div><span>GRIP</span><div class="stat-track"><i id="statGrip"></i></div><b id="gripNum">78</b></div><div><span>DRIFT</span><div class="stat-track"><i id="statDrift"></i></div><b id="driftNum">86</b></div></div><div class="car-pager"><button id="prevCar">←</button><div id="carDots"></div><button id="nextCar">→</button></div><button class="primary-btn garage-start" id="driveBtn"><span>TURUN KE JALAN</span><b>↗</b></button></div>
+      </div>
+      <div class="garage-bottom"><span>04 ICONIC MACHINES</span><span>← → PILIH MOBIL</span></div>
+    </section>
+
+    <section class="screen settings-screen" id="settingsScreen">
+      <div class="settings-card"><button class="back-btn" data-back="menuScreen">← KEMBALI</button><div class="eyebrow"><i></i> SYSTEM CONFIGURATION</div><h2>ATUR <em>SUASANA.</em></h2><p>Sesuaikan pengalaman berkendaramu.</p>
+        <label class="setting-row"><span><b>PENCAHAYAAN</b><small>Terang dunia permainan</small></span><input id="brightness" type="range" min="65" max="130" value="100"><strong id="brightnessValue">100%</strong></label>
+        <label class="setting-row"><span><b>SUARA</b><small>Volume efek & suasana</small></span><input id="volume" type="range" min="0" max="100" value="60"><strong id="volumeValue">60%</strong></label>
+        <label class="setting-row"><span><b>KUALITAS VISUAL</b><small>Performa untuk perangkatmu</small></span><select id="quality"><option value="high">TINGGI</option><option value="balanced" selected>SEIMBANG</option><option value="low">HEMAT</option></select></label>
+        <div class="settings-note">PENGATURAN TERSIMPAN OTOMATIS <span>●</span></div>
+      </div>
+    </section>
+
+    <section class="screen pause-screen" id="pauseScreen"><div class="pause-card"><div class="eyebrow"><i></i> DRIVER REST</div><h2>JEDA <em>SEJENAK.</em></h2><button class="primary-btn" id="resumeBtn"><span>LANJUTKAN</span><b>↗</b></button><button class="text-btn" id="pauseSettingsBtn">PENGATURAN <span>＋</span></button><button class="text-btn" id="quitBtn">KEMBALI KE MENU <span>↗</span></button></div></section>
+
+    <section class="hud hidden" id="hud">
+      <div class="hud-top"><button class="icon-btn" id="pauseBtn" aria-label="Jeda">Ⅱ</button><div class="location"><span class="live-dot"></span><div><b>SHIBUYA</b><small>TOKYO · JAPAN</small></div></div><button class="icon-btn light-btn" id="lightBtn" aria-label="Lampu">◉</button><button class="icon-btn camera-btn" id="cameraBtn" aria-label="Kamera">▣</button></div>
+      <div class="mission-card" id="missionCard"><div class="mission-icon">任</div><div><small id="missionType">PESANAN DARI AKI</small><b id="missionTitle">ANTAR SUKU CADANG</b><span id="missionHint">Cari penanda kuning di jalan</span></div><button id="missionAction">AMBIL <b>↗</b></button></div>
+      <div class="hud-right"><div class="speed-box"><span>KM/H</span><strong id="speed">000</strong><i>GEAR <b id="gear">1</b></i></div><div class="drift-meter"><span>DRIFT SCORE</span><strong id="score">00000</strong><div class="meter-track"><i id="driftFill"></i></div></div></div>
+      <div class="hud-bottom-left"><div class="route-label"><span class="route-pin">⌖</span><div><b id="routeName">NEON DISTRICT</b><small id="routeDistance">FREE ROAM · NIGHT DRIVE</small></div></div></div>
+      <div class="toast" id="toast"></div>
+      <div class="touch-controls" id="touchControls">
+        <div class="steer-group"><button class="control-btn steer" data-control="left">◀</button><button class="control-btn steer" data-control="right">▶</button></div>
+        <div class="action-group"><button class="control-btn handbrake" data-control="handbrake"><span>✦</span><small>HANDBRAKE</small></button><button class="control-btn brake" data-control="brake"><span>▤</span><small>REM</small></button><button class="control-btn gas" data-control="gas"><span>▲</span><small>GAS</small></button></div>
+      </div>
+      <div class="key-hint">W / ↑ GAS &nbsp; A D / ← → KEMUDI &nbsp; SPACE HANDBRAKE</div>
+    </section>
+    <div id="orientationHint">Putar perangkat untuk pengalaman terbaik <span>↻</span></div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
